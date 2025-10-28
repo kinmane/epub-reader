@@ -1,50 +1,103 @@
-# EPUB Reader Site
+# 📚 Leitor de Livros
 
-Este projeto é um site simples para upload e leitura de arquivos nos formatos EPUB, MOBI e PDF. O objetivo é permitir que os usuários carreguem seus livros digitais e os leiam diretamente no navegador.
+Um leitor de livros simples e funcional para arquivos **EPUB** e **PDF** que funciona diretamente no navegador, sem necessidade de instalação ou servidor.
 
-## Estrutura do Projeto
+## ✨ Funcionalidades
+
+- 📖 Leitura de arquivos EPUB
+- 📄 Leitura de arquivos PDF
+- ⌨️ Navegação por teclado (setas ← →)
+- 📱 Interface responsiva
+- 🎨 Design limpo e moderno
+- 🚀 Funciona 100% no navegador (sem npm, sem servidor)
+
+## 🚀 Como Usar
+
+1. **Abra o arquivo `index.html` diretamente no seu navegador**
+
+   - Clique duas vezes no arquivo `index.html`
+   - Ou arraste o arquivo para o navegador
+   - Ou clique com o botão direito → Abrir com → Seu navegador preferido
+
+2. **Carregue um livro**
+
+   - Clique em "Selecione um Arquivo"
+   - Escolha um arquivo EPUB ou PDF
+   - Clique em "Carregar Livro"
+
+3. **Navegue pelo livro**
+   - Use os botões "← Anterior" e "Próxima →"
+   - Ou use as teclas de seta do teclado
+
+## 📁 Estrutura do Projeto
 
 ```
-epub-reader-site
-├── src
-│   ├── index.html         # Página principal do site
-│   ├── css
-│   │   └── style.css      # Estilos CSS para o site
-│   ├── js
-│   │   ├── app.js         # Ponto de entrada do JavaScript
-│   │   ├── fileUploader.js # Funções para upload de arquivos
-│   │   └── bookReader.js   # Funções para leitura de livros
-│   └── assets
-│       └── icons          # Ícones utilizados no site
-├── package.json           # Configuração do npm
-└── README.md              # Documentação do projeto
+epub-reader/
+├── index.html          # Página principal
+├── css/
+│   └── style.css      # Estilos da aplicação
+├── js/
+│   ├── app.js         # Controlador principal
+│   ├── bookReader.js  # Lógica de leitura de livros
+│   └── fileUploader.js # Validação de arquivos
+├── assets/
+│   └── icons          # Ícones (se necessário)
+└── README.md          # Este arquivo
 ```
 
-## Instalação
+## 🔧 Tecnologias Utilizadas
 
-1. Clone o repositório:
-   ```
-   git clone <URL_DO_REPOSITORIO>
-   ```
-2. Navegue até o diretório do projeto:
-   ```
-   cd epub-reader-site
-   ```
-3. Instale as dependências:
-   ```
-   npm install
-   ```
+- **HTML5** - Estrutura
+- **CSS3** - Estilos
+- **JavaScript Vanilla** - Lógica
+- **PDF.js** (via CDN) - Renderização de PDFs
+- **EPUBjs** (via CDN) - Renderização de EPUBs
 
-## Uso
+## 📝 Formatos Suportados
 
-1. Abra o arquivo `src/index.html` em um navegador.
-2. Utilize a funcionalidade de upload para carregar arquivos EPUB, MOBI ou PDF.
-3. Após o upload, o conteúdo do livro será exibido na página.
+- ✅ EPUB (.epub)
+- ✅ PDF (.pdf)
 
-## Contribuição
+## ⚡ Recursos
 
-Sinta-se à vontade para contribuir com melhorias ou correções. Crie um fork do repositório, faça suas alterações e envie um pull request.
+- Sem dependências locais
+- Sem necessidade de npm install
+- Sem necessidade de servidor web
+- Totalmente offline após o primeiro carregamento
+- Leve e rápido
 
-## Licença
+## 🎯 Uso Avançado
 
-Este projeto é de código aberto e pode ser utilizado e modificado livremente.
+### Arrastar e Soltar
+
+Você pode arrastar um arquivo EPUB ou PDF diretamente para a área de upload.
+
+### Navegação por Teclado
+
+- **Seta Direita (→)**: Próxima página
+- **Seta Esquerda (←)**: Página anterior
+
+## 🌐 Compatibilidade
+
+Testado e funcional nos seguintes navegadores:
+
+- Google Chrome / Chromium
+- Mozilla Firefox
+- Microsoft Edge
+- Safari
+
+## 📄 Licença
+
+Este projeto é de código aberto e está disponível para uso livre.
+
+## 🤝 Contribuindo
+
+Contribuições são bem-vindas! Sinta-se à vontade para:
+
+- Reportar bugs
+- Sugerir novas funcionalidades
+- Enviar pull requests
+
+---
+
+**Desenvolvido com ❤️ para amantes de livros digitais**
