@@ -116,6 +116,112 @@ main {
   cursor: not-allowed;
 }
 
+#settings-button {
+  margin-left: auto;
+  font-size: 18px;
+  padding: 8px 15px;
+}
+
+#page-info {
+  font-weight: bold;
+  color: #35424a;
+  flex: 1;
+  text-align: center;
+}
+
+/* Painel de configurações */
+#settings-panel {
+  background: #f8f9fa;
+  border-radius: 5px;
+  padding: 20px;
+  margin-bottom: 20px;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+  animation: slideDown 0.3s ease;
+}
+
+@keyframes slideDown {
+  from {
+    opacity: 0;
+    transform: translateY(-10px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+.setting-group {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  margin-bottom: 15px;
+  gap: 15px;
+}
+
+.setting-group:last-child {
+  margin-bottom: 0;
+}
+
+.setting-group label {
+  font-weight: 500;
+  color: #35424a;
+  min-width: 130px;
+}
+
+.setting-control {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+
+.setting-control button {
+  padding: 5px 12px;
+  background: #35424a;
+  color: white;
+  border: none;
+  border-radius: 3px;
+  cursor: pointer;
+  font-size: 14px;
+  font-weight: bold;
+  transition: background 0.2s ease;
+}
+
+.setting-control button:hover {
+  background: #4a5660;
+}
+
+.setting-control button:active {
+  transform: scale(0.95);
+}
+
+#font-size-display {
+  min-width: 50px;
+  text-align: center;
+  font-weight: bold;
+  color: #35424a;
+}
+
+.setting-group select {
+  flex: 1;
+  padding: 8px 12px;
+  border: 1px solid #ddd;
+  border-radius: 4px;
+  background: white;
+  font-size: 14px;
+  cursor: pointer;
+  transition: border-color 0.2s ease;
+}
+
+.setting-group select:hover {
+  border-color: #35424a;
+}
+
+.setting-group select:focus {
+  outline: none;
+  border-color: #5cb85c;
+  box-shadow: 0 0 0 2px rgba(92, 184, 92, 0.1);
+}
+
 #page-info {
   font-weight: bold;
   color: #35424a;
@@ -161,5 +267,23 @@ main {
 
   #controls button {
     width: 100%;
+  }
+
+  #settings-button {
+    width: auto;
+    align-self: stretch;
+  }
+
+  .setting-group {
+    flex-direction: column;
+    align-items: stretch;
+  }
+
+  .setting-group label {
+    margin-bottom: 5px;
+  }
+
+  .setting-control {
+    justify-content: center;
   }
 }

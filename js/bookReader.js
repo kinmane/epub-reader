@@ -5,6 +5,14 @@ let currentRendition = null;
 let currentPdfDoc = null;
 let currentPdfPage = 1;
 
+// Configurações de leitura
+const readerSettings = {
+  fontSize: 100, // porcentagem
+  fontFamily: "Georgia, serif",
+  theme: "light",
+  lineHeight: 1.6,
+};
+
 // Função principal para carregar um livro
 function loadBook(file, fileType) {
   const bookContent = document.getElementById("book-content");
@@ -112,6 +120,7 @@ function loadPdf(file) {
 
         renderPdfPage(1);
         setupPdfNavigation();
+        setupReaderSettings();
         showReaderSection();
         showStatus(`PDF carregado: ${pdf.numPages} páginas`, "info");
       })
@@ -200,4 +209,140 @@ function setupPdfNavigation() {
       updatePageInfo();
     }
   });
+}
+
+// Configurar controles de personalização
+function setupReaderSettings() {
+  const settingsButton = document.getElementById("settings-button");
+  const settingsPanel = document.getElementById("settings-panel");
+  const fontIncrease = document.getElementById("font-increase");
+  const fontDecrease = document.getElementById("font-decrease");
+  const fontSizeDisplay = document.getElementById("font-size-display");
+  const fontFamily = document.getElementById("font-family");
+  const theme = document.getElementById("theme");
+  const lineHeight = document.getElementById("line-height");
+
+  // Toggle painel de configurações
+  settingsButton.onclick = () => {
+    if (settingsPanel.style.display === "none") {
+      settingsPanel.style.display = "block";
+    } else {
+      settingsPanel.style.display = "none";
+    }
+  };
+
+  // Aumentar fonte
+  fontIncrease.onclick = () => {
+    if (readerSettings.fontSize < 200) {
+      readerSettings.fontSize += 10;
+      fontSizeDisplay.textContent = readerSettings.fontSize + "%";
+      applySettings();
+    }
+  };
+
+  // Diminuir fonte
+  fontDecrease.onclick = () => {
+    if (readerSettings.fontSize > 60) {
+      readerSettings.fontSize -= 10;
+      fontSizeDisplay.textContent = readerSettings.fontSize + "%";
+      applySettings();
+    }
+  };
+
+  // Mudar tipo de fonte
+  fontFamily.onchange = (e) => {
+    readerSettings.fontFamily = e.target.value;
+    applySettings();
+  };
+
+  // Mudar tema
+  theme.onchange = (e) => {
+    readerSettings.theme = e.target.value;
+    applySettings();
+  };
+
+  // Mudar espaçamento
+  lineHeight.onchange = (e) => {
+    readerSettings.lineHeight = parseFloat(e.target.value);
+    applySettings();
+  };
+
+  // Restaurar valores salvos
+  fontSizeDisplay.textContent = readerSettings.fontSize + "%";
+}
+
+// Aplicar configurações ao livro atual
+function applySettings() {
+  if (currentRendition) {
+    applySettingsToEpub();
+  } else if (currentPdfDoc) {
+    applySettingsToPdf();
+  }
+}
+
+// Aplicar configurações a EPUB
+function applySettingsToEpub() {
+  if (!currentRendition) return;
+
+  const themes = {
+    light: {
+      body: {
+        background: "#ffffff",
+        color: "#000000",
+      },
+    },
+    sepia: {
+      body: {
+        background: "#f4ecd8",
+        color: "#5c4b37",
+      },
+    },
+    dark: {
+      body: {
+        background: "#1a1a1a",
+        color: "#e0e0e0",
+      },
+    },
+  };
+
+  // Registrar temas
+  currentRendition.themes.register("light", themes.light);
+  currentRendition.themes.register("sepia", themes.sepia);
+  currentRendition.themes.register("dark", themes.dark);
+
+  // Aplicar tema selecionado
+  currentRendition.themes.select(readerSettings.theme);
+
+  // Aplicar configurações de fonte
+  currentRendition.themes.fontSize(readerSettings.fontSize + "%");
+  currentRendition.themes.font(readerSettings.fontFamily);
+
+  // Aplicar espaçamento
+  currentRendition.themes.default({
+    p: {
+      "line-height": readerSettings.lineHeight + " !important",
+    },
+    div: {
+      "line-height": readerSettings.lineHeight + " !important",
+    },
+  });
+}
+
+// Aplicar configurações a PDF
+function applySettingsToPdf() {
+  const bookContent = document.getElementById("book-content");
+
+  const themes = {
+    light: { background: "#ffffff", filter: "none" },
+    sepia: { background: "#f4ecd8", filter: "sepia(30%)" },
+    dark: { background: "#1a1a1a", filter: "invert(90%) hue-rotate(180deg)" },
+  };
+
+  const selectedTheme = themes[readerSettings.theme];
+  bookContent.style.background = selectedTheme.background;
+
+  const canvas = bookContent.querySelector("canvas");
+  if (canvas) {
+    canvas.style.filter = selectedTheme.filter;
+  }
 }
