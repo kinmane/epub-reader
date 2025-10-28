@@ -19,43 +19,49 @@ function loadBook(file, fileType) {
 
 // Carregar arquivo EPUB
 function loadEpub(file) {
-  const reader = new FileReader();
+  try {
+    // Criar URL do arquivo para o EPUBjs
+    const fileURL = URL.createObjectURL(file);
 
-  reader.onload = function (e) {
-    try {
-      const arrayBuffer = e.target.result;
+    // Criar livro usando EPUBjs com o Blob URL
+    currentBook = ePub(fileURL, {
+      openAs: "epub",
+    });
 
-      // Criar livro usando EPUBjs
-      currentBook = ePub(arrayBuffer);
+    const bookContent = document.getElementById("book-content");
+    bookContent.innerHTML = "";
 
-      const bookContent = document.getElementById("book-content");
-      bookContent.innerHTML = "";
+    // Renderizar o livro
+    currentRendition = currentBook.renderTo("book-content", {
+      width: "100%",
+      height: 600,
+      spread: "none",
+      flow: "paginated",
+    });
 
-      // Renderizar o livro
-      currentRendition = currentBook.renderTo("book-content", {
-        width: "100%",
-        height: 600,
-        spread: "none",
+    // Aguardar o livro carregar e então exibir
+    currentBook.ready
+      .then(() => {
+        return currentRendition.display();
+      })
+      .then(() => {
+        // Configurar navegação
+        setupEpubNavigation();
+        showReaderSection();
+        showStatus("Livro EPUB carregado com sucesso!", "info");
+      })
+      .catch((error) => {
+        console.error("Erro ao carregar EPUB:", error);
+        showStatus(
+          `Erro ao carregar o arquivo EPUB: ${error.message}`,
+          "error"
+        );
+        URL.revokeObjectURL(fileURL);
       });
-
-      currentRendition.display();
-
-      // Configurar navegação
-      setupEpubNavigation();
-
-      showReaderSection();
-      showStatus("Livro EPUB carregado com sucesso!", "info");
-    } catch (error) {
-      console.error("Erro ao carregar EPUB:", error);
-      showStatus("Erro ao carregar o arquivo EPUB.", "error");
-    }
-  };
-
-  reader.onerror = function () {
-    showStatus("Erro ao ler o arquivo.", "error");
-  };
-
-  reader.readAsArrayBuffer(file);
+  } catch (error) {
+    console.error("Erro ao processar EPUB:", error);
+    showStatus(`Erro ao processar o arquivo EPUB: ${error.message}`, "error");
+  }
 }
 
 function setupEpubNavigation() {
